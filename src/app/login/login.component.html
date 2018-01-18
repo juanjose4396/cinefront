@@ -1,0 +1,65 @@
+<div class="container">
+  <div class="row justify-content-md-center">
+    <div class="col-md-6">
+
+      <section class="py-5">
+        <!--alerta cuando la peticion de registro con un error-->
+        <div [hidden]="msjError == ''" class="alert alert-danger alert-dismissible fade show" role="alert">
+          <strong>Ocurrio un error!</strong> {{msjError}}.
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <!--alerta cuando la peticion de registro responde exitosamente-->
+        <div [hidden]="msjSuccess == ''" class="alert alert-success alert-dismissible fade show" role="alert">
+          <strong>Operación exitosa!</strong> {{msjSuccess}}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <!--formulario de registro-->
+        <div class="container text-center mt-5 bg-light text-dark border border-info">
+          <form [formGroup]="registerForm" novalidate>
+            <div class="pt-5 pb-5">
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input formControlName="email" type="email" class="form-control" id="email" [(ngModel)]="model.email" name="email"  aria-describedby="emailHelp" placeholder="Enter email" required>
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                <div *ngIf="email.invalid && (email.dirty || email.touched)"
+                     class="alert alert-danger">
+
+                  <div *ngIf="email.errors.required">
+                    El email es requerido.
+                  </div>
+                  <div *ngIf="email.errors.email && !email.errors.required">
+                    Email invalido.
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="pass">Password</label>
+                <input formControlName="pass" [(ngModel)]="model.pass" name="pass" type="password" class="form-control" id="pass" placeholder="Password" name="pass" required>
+                <div *ngIf="pass.invalid && (pass.dirty || pass.touched)"
+                     class="alert alert-danger">
+
+                  <div *ngIf="pass.errors.required">
+                    La password es requerida.
+                  </div>
+                  <div *ngIf="pass.errors.minlength && !pass.errors.required">
+                    La password debe contener al menos 4 caracteres.
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <a href="" class="d-block">¿Olvido su contraseña?</a>
+              </div>
+              <button [disabled]="!registerForm.valid" (click)="login()" class="btn btn-info mt-3">Login</button>
+            </div>
+          </form>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
