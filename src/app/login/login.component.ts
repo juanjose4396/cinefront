@@ -39,7 +39,9 @@ export class LoginComponent implements OnInit {
               console.log(response);
               this.msjSuccess = response.data.mensaje;
               localStorage.setItem('usuarioSesion', JSON.stringify(response.data.usuario));
-              this.router.navigateByUrl('/home');
+              setTimeout(() => {
+                  this.router.navigateByUrl('/home');
+              }, 3000);
           }, error => {
               console.log(error);
               this.msjError = error.data.mensaje;

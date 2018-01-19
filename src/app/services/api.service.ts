@@ -1,8 +1,15 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Response} from '../interfaces/response.interface';
 
 @Injectable()
 
 export class APIService {
-    constructor(private httpClient: HttpClient){ }
+    urlBase = 'http://localhost:8080/ApiWebDB/';
+    constructor(private httpClient: HttpClient) {}
+
+    public getPeliculas() {
+        const headers = new HttpHeaders({'Content-Type': 'application/json'});
+        return this.httpClient.get<Response>(this.urlBase + 'Peliculas/peliculas', {headers: headers});
+    }
 }

@@ -9,7 +9,7 @@ export class AuthGuardInverse implements CanActivate {
         if (!localStorage.getItem('usuarioSesion')) {
             return true;
         }
-        this.router.navigateByUrl('/home');
+        this.router.navigateByUrl('/peliculas');
         return false;
     }
 }
