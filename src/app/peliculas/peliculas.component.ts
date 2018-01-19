@@ -8,6 +8,7 @@ import {APIService} from '../services/api.service';
 })
 export class PeliculasComponent implements OnInit {
   peliculas = null;
+  msjError = '';
 
   constructor(private apiService: APIService) {
   }
@@ -15,11 +16,18 @@ export class PeliculasComponent implements OnInit {
   ngOnInit() {
     this.apiService.getPeliculas().subscribe(
         response => {
-          console.log(response);
-          this.peliculas = response.data.peliculas;
+            console.log(response);
+            if(response.data.codigoRespuesta.toString() === 'ok') {
+                this.peliculas = response.data.peliculas;
+            }else{
+                this.msjError = response.data.mensaje;
+                setTimeout(() => {
+                    this.msjError = '';
+                }, 3000);
+            }
         },
         error => {
-          console.log(error);
+            console.log(error);
         }
     );
   }

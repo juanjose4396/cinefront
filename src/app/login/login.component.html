@@ -2,23 +2,23 @@
   <div class="row justify-content-md-center">
     <div class="col-md-6">
 
+      <!--alerta cuando la peticion de registro con un error-->
+      <div [hidden]="msjError == ''" class="alert alert-danger alert-dismissible fade show m-0" role="alert">
+        <strong>Ocurrio un error!</strong> {{msjError}}.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <!--alerta cuando la peticion de registro responde exitosamente-->
+      <div [hidden]="msjSuccess == ''" class="alert alert-success alert-dismissible fade show m-0" role="alert">
+        <strong>Operación exitosa!</strong> {{msjSuccess}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
       <section class="py-5">
-        <!--alerta cuando la peticion de registro con un error-->
-        <div [hidden]="msjError == ''" class="alert alert-danger alert-dismissible fade show" role="alert">
-          <strong>Ocurrio un error!</strong> {{msjError}}.
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-
-        <!--alerta cuando la peticion de registro responde exitosamente-->
-        <div [hidden]="msjSuccess == ''" class="alert alert-success alert-dismissible fade show" role="alert">
-          <strong>Operación exitosa!</strong> {{msjSuccess}}
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-
         <!--formulario de registro-->
         <div class="container text-center mt-5 bg-light text-dark border border-info">
           <form [formGroup]="registerForm" novalidate>

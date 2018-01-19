@@ -12,4 +12,9 @@ export class APIService {
         const headers = new HttpHeaders({'Content-Type': 'application/json'});
         return this.httpClient.get<Response>(this.urlBase + 'Peliculas/peliculas', {headers: headers});
     }
+
+    public getPelicula(id) {
+        const headers =  new HttpHeaders({'Content-Type': 'application/json'});
+        return this.httpClient.get<Response>(this.urlBase + 'Peliculas/' + id, {headers: headers});
+    }
 }

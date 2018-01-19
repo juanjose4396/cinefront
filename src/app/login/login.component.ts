@@ -37,11 +37,19 @@ export class LoginComponent implements OnInit {
       this.authService.login(this.model.email, this.model.pass).subscribe(
           response => {
               console.log(response);
-              this.msjSuccess = response.data.mensaje;
-              localStorage.setItem('usuarioSesion', JSON.stringify(response.data.usuario));
-              setTimeout(() => {
-                  this.router.navigateByUrl('/home');
-              }, 3000);
+
+              if(response.data.codigoRespuesta.toString() === 'ok') {
+                  this.msjSuccess = response.data.mensaje;
+                  localStorage.setItem('usuarioSesion', JSON.stringify(response.data.usuario));
+                  setTimeout(() => {
+                      this.router.navigateByUrl('/peliculas');
+                  }, 3000);
+              }else{
+                  this.msjError = response.data.codigoRespuesta;
+                  setTimeout(() => {
+                      this.msjError = '';
+                  }, 3000);
+              }
           }, error => {
               console.log(error);
               this.msjError = error.data.mensaje;

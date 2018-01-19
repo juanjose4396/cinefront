@@ -1,6 +1,14 @@
 <!-- Page Content -->
 <div class="container">
 
+  <!--alerta cuando la peticion de registro con un error-->
+  <div [hidden]="msjError == ''" class="alert alert-danger alert-dismissible fade show" role="alert">
+    <strong>Ocurrio un error!</strong> {{msjError}}.
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
   <!-- Page Heading -->
   <h1 class="my-4">Peliculas
     <small>disponibles</small>
@@ -15,6 +23,7 @@
             <a href="#">{{pelicula.nombre}}</a>
           </h4>
           <p class="card-text">{{pelicula.descripcion}}</p>
+          <a href="#" routerLink="/pelicula/{{pelicula.id}}" class="btn btn-outline-info">Comprar boletas</a>
         </div>
       </div>
     </div>
