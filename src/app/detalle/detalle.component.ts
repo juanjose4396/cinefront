@@ -44,7 +44,7 @@ export class DetalleComponent implements OnInit {
                         swal('Exito!', response.data.mensaje, 'success');
                         setTimeout( () => {
                             this.router.navigate(['/comprar/boletas/sillas'],{ queryParams: { id: this.pelicula.id, 'numero': this.model.numero } });
-                        }, 3000);
+                        }, 2000);
                     }else{
                         swal("Lo sentimos!", response.data.mensaje, 'error');
                     }
