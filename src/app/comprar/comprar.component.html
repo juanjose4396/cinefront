@@ -6,9 +6,12 @@
     <ng-container *ngFor="let silla of sillas;">
       <div class="col">
         <button  *ngIf="silla.disponibilidad == 'ocupada'" class="btn btn-danger btn-lg m-0 mb-4" disabled>{{silla.ubicacion}}</button>
-        <button  *ngIf="silla.disponibilidad != 'ocupada'" class="btn btn-info btn-lg m-0 mb-4">{{silla.ubicacion}}</button>
+        <button  resaltar-click [disabled]="contador==numeroBoletas" class="btn btn-primary btn-lg m-0 mb-4" (click)="seleccionarSilla(silla.id)" *ngIf="silla.disponibilidad != 'ocupada'" [class]="claseBtn">{{silla.ubicacion}}</button>
       </div>
     </ng-container>
+    <div class="container text-center mt-4">
+      <button [hidden]="contador<numeroBoletas" (click)="comprar()" class="btn btn-lg btn-success">Comprar boletas</button>
+    </div>
   </div>
 </div>
 

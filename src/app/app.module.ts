@@ -14,6 +14,7 @@ import {AuthGuardInverse} from './services/authInverseGuard.service';
 import {APIService} from './services/api.service';
 import {DetalleComponent} from './detalle/detalle.component';
 import { ComprarComponent } from './comprar/comprar.component';
+import {ResaltarClickDirective} from './directives/resaltar-click.directive';
 
 const routes = [
     {path: '', component: LoginComponent, canActivate: [AuthGuardInverse]},
@@ -28,7 +29,8 @@ const routes = [
     PeliculasComponent,
     LoginComponent,
     DetalleComponent,
-    ComprarComponent],
+    ComprarComponent,
+    ResaltarClickDirective],
   imports: [
     BrowserModule,
     RouterModule.forRoot(routes),

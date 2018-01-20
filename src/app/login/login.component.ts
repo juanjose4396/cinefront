@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
                       this.router.navigateByUrl('/peliculas');
                   }, 3000);
               }else{
-                  this.msjError = response.data.codigoRespuesta;
+                  this.msjError = response.data.mensaje;
                   setTimeout(() => {
                       this.msjError = '';
                   }, 3000);

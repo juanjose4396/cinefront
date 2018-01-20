@@ -25,4 +25,12 @@ export class APIService {
         const headers =  new HttpHeaders({'Content-Type': 'application/json'});
         return this.httpClient.get<Response>(this.urlBase + 'Peliculas/' + id + '/sillas', {headers: headers});
     }
+    public comprarBoleta(idUsuario, idPelicula, idSilla) {
+        const headers = new HttpHeaders({'Content-Type': 'application/json'});
+        return this.httpClient.post<Response>(this.urlBase + 'Boletas/compra',{data: {
+                idPelicula: idPelicula,
+                idUsuario: idUsuario,
+                sillas: idSilla
+            }}, {headers: headers});
+    }
 }
