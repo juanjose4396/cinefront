@@ -13,19 +13,22 @@ import {AuthGuard} from './services/authGuard.service';
 import {AuthGuardInverse} from './services/authInverseGuard.service';
 import {APIService} from './services/api.service';
 import {DetalleComponent} from './detalle/detalle.component';
+import { ComprarComponent } from './comprar/comprar.component';
 
 const routes = [
     {path: '', component: LoginComponent, canActivate: [AuthGuardInverse]},
     {path: 'login', component: LoginComponent, canActivate: [AuthGuardInverse]},
     {path: 'peliculas', component: PeliculasComponent, canActivate: [AuthGuard]},
-    {path: 'pelicula/:id', component: DetalleComponent, canActivate: [AuthGuard]}]
+    {path: 'pelicula/:id', component: DetalleComponent, canActivate: [AuthGuard]},
+    {path: 'comprar/boletas/sillas', component: ComprarComponent}];
 
 @NgModule({
   declarations: [
     AppComponent,
     PeliculasComponent,
     LoginComponent,
-    DetalleComponent],
+    DetalleComponent,
+    ComprarComponent],
   imports: [
     BrowserModule,
     RouterModule.forRoot(routes),

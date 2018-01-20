@@ -18,6 +18,25 @@
         </div>
       </div>
     </div>
+    <div class="col-lg-6 col-sm-6 portfolio-item mt-5">
+      <form [formGroup]="numeroForm" novalidate class="mt-5">
+        <div class="form-group">
+            <label for="numero" class="font-weight-bold mt-5">Numero de boletas</label>
+            <input formControlName="numero" type="number" class="form-control" id="numero" [(ngModel)]="model.numero" name="numero" placeholder="Ingrese la cantidad de boletas deseadas" required>
+
+            <!--mensaje de validacion para campos requeridos-->
+            <div *ngIf="numero.invalid && (numero.dirty || numero.touched)"
+                 class="alert alert-danger">
+              <div *ngIf="numero.errors.required">
+                Campo vacio.
+              </div>
+            </div>
+            <div class="text-center">
+              <button href="#" [disabled]="!numeroForm.valid" class="btn btn-info btn-lg mt-2" (click)="getAvailabilitySillas()">Comprar boletas</button>
+            </div>
+        </div>
+      </form>
+    </div>
   </div>
   <!-- /.row -->
 

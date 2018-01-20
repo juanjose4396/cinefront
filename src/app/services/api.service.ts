@@ -17,4 +17,12 @@ export class APIService {
         const headers =  new HttpHeaders({'Content-Type': 'application/json'});
         return this.httpClient.get<Response>(this.urlBase + 'Peliculas/' + id, {headers: headers});
     }
+    public getAvailabilitySillas(id, numeroBoletas){
+        const headers =  new HttpHeaders({'Content-Type': 'application/json'});
+        return this.httpClient.get<Response>(this.urlBase + 'Boletas/pelicula/' + id + '/numero/' + numeroBoletas, {headers: headers});
+    }
+    public getSillas(id){
+        const headers =  new HttpHeaders({'Content-Type': 'application/json'});
+        return this.httpClient.get<Response>(this.urlBase + 'Peliculas/' + id + '/sillas', {headers: headers});
+    }
 }
