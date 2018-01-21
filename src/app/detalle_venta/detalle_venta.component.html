@@ -1,0 +1,29 @@
+<!-- Page Content -->
+<div class="container">
+
+  <!-- Page Heading -->
+  <h1 class="my-4">Peliculas
+    <small>disponibles</small>
+  </h1>
+
+  <div class="row">
+    <div class="col-lg-6 col-sm-6 portfolio-item">
+      <div class="card h-100">
+        <a href="#"><img class="card-img-top" src="{{pelicula.url}}" alt=""></a>
+        <div class="card-body">
+          <h4 class="card-title">
+            <a href="#">{{pelicula.nombre}}</a>
+          </h4>
+          <p class="card-text">{{pelicula.descripcion}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6 col-sm-6 portfolio-item mt-5">
+      <h1>Total de personas que vieron la pelicula: {{ cantidadPersonas}}</h1>
+      <h1>Total recaudado: $ {{totalRecaudado | number}}</h1>
+    </div>
+  </div>
+  <!-- /.row -->
+
+</div>
+<!-- .container -->

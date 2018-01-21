@@ -83,15 +83,17 @@ export class ComprarComponent implements OnInit {
       const tod = new Date();
       let dd = tod.getDate();
       let mm = tod.getMonth()+1; //January is 0!
+      let d;
+      let m;
 
       const yyyy = tod.getFullYear();
       if(dd < 10){
-          dd = '0' + dd;
+          d = '0' + dd;
       }
       if(mm < 10){
-          mm = '0'+ mm;
+          m = '0' + mm;
       }
-      const t = yyyy + '-' + mm + '-' + dd;
+      const t = yyyy + '-' + m + '-' + d;
       return t;
     }
 }

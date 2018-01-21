@@ -15,13 +15,15 @@ import {APIService} from './services/api.service';
 import {DetalleComponent} from './detalle/detalle.component';
 import { ComprarComponent } from './comprar/comprar.component';
 import {ResaltarClickDirective} from './directives/resaltar-click.directive';
+import {DetalleVentaComponent} from './detalle_venta/detalle_venta.component';
 
 const routes = [
     {path: '', component: LoginComponent, canActivate: [AuthGuardInverse]},
     {path: 'login', component: LoginComponent, canActivate: [AuthGuardInverse]},
     {path: 'peliculas', component: PeliculasComponent, canActivate: [AuthGuard]},
     {path: 'pelicula/:id', component: DetalleComponent, canActivate: [AuthGuard]},
-    {path: 'comprar/boletas/sillas', component: ComprarComponent}];
+    {path: 'comprar/boletas/sillas', component: ComprarComponent},
+    {path: 'pelicula/detalle/venta/:id', component: DetalleVentaComponent}];
 
 @NgModule({
   declarations: [
@@ -30,7 +32,8 @@ const routes = [
     LoginComponent,
     DetalleComponent,
     ComprarComponent,
-    ResaltarClickDirective],
+    ResaltarClickDirective,
+    DetalleVentaComponent],
   imports: [
     BrowserModule,
     RouterModule.forRoot(routes),
