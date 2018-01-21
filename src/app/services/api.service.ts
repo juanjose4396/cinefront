@@ -17,20 +17,22 @@ export class APIService {
         const headers =  new HttpHeaders({'Content-Type': 'application/json'});
         return this.httpClient.get<Response>(this.urlBase + 'Peliculas/' + id, {headers: headers});
     }
-    public getAvailabilitySillas(id, numeroBoletas){
+    public getAvailabilitySillas(id, numeroBoletas, tipo){
         const headers =  new HttpHeaders({'Content-Type': 'application/json'});
-        return this.httpClient.get<Response>(this.urlBase + 'Boletas/pelicula/' + id + '/numero/' + numeroBoletas, {headers: headers});
+        return this.httpClient.get<Response>(this.urlBase + 'Boletas/pelicula/' + id + '/funcion/' + tipo + '/numero/' + numeroBoletas, {headers: headers});
     }
-    public getSillas(id){
+    public getSillas(id, tipo){
         const headers =  new HttpHeaders({'Content-Type': 'application/json'});
-        return this.httpClient.get<Response>(this.urlBase + 'Peliculas/' + id + '/sillas', {headers: headers});
+        return this.httpClient.get<Response>(this.urlBase + 'Peliculas/' + id + '/funcion/' + tipo + '/sillas', {headers: headers});
     }
-    public comprarBoleta(idUsuario, idPelicula, idSilla) {
+    public comprarBoleta(idUsuario, idPelicula, idSilla, tipo, fecha) {
         const headers = new HttpHeaders({'Content-Type': 'application/json'});
         return this.httpClient.post<Response>(this.urlBase + 'Boletas/compra',{data: {
                 idPelicula: idPelicula,
                 idUsuario: idUsuario,
-                sillas: idSilla
+                sillas: idSilla,
+                tipo: tipo,
+                fecha: fecha
             }}, {headers: headers});
     }
 }

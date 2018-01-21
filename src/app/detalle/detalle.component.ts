@@ -17,6 +17,7 @@ export class DetalleComponent implements OnInit {
 
   constructor(private apiService: APIService,private route: ActivatedRoute,private router: Router) {
     this.id = this.route.snapshot.params['id'];
+    this.model.tipo = '2D';
   }
   ngOnInit() {
       this.numeroForm = new FormGroup({
@@ -36,14 +37,14 @@ export class DetalleComponent implements OnInit {
     );
   }
   public getAvailabilitySillas(){
-      this.apiService.getAvailabilitySillas(this.pelicula.id,this.model.numero)
+      this.apiService.getAvailabilitySillas(this.pelicula.id,this.model.numero, this.model.tipo)
           .subscribe(response => {
                 console.log(response);
                 if(response.data.codigoRespuesta.toString() === 'ok') {
                     if(response.data.availability == 'true'){
                         swal('Exito!', response.data.mensaje, 'success');
                         setTimeout( () => {
-                            this.router.navigate(['/comprar/boletas/sillas'],{ queryParams: { id: this.pelicula.id, 'numero': this.model.numero } });
+                            this.router.navigate(['/comprar/boletas/sillas'],{ queryParams: { id: this.pelicula.id, 'numero': this.model.numero, 'tipo': this.model.tipo } });
                         }, 2000);
                     }else{
                         swal("Lo sentimos!", response.data.mensaje, 'error');

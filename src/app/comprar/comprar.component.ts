@@ -2,6 +2,7 @@ import {Component, HostBinding, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {APIService} from '../services/api.service';
 import {AuthService} from '../services/auth.service';
+import {DatePipe} from '@angular/common';
 declare var swal: any;
 
 @Component({
@@ -12,21 +13,23 @@ declare var swal: any;
 export class ComprarComponent implements OnInit {
   idPelicula = 0;
   numeroBoletas = 0;
+  tipo;
   sillas: any;
   sillasOcupadas;
   sillasSeleccionadas = [];
   contador = 0;
   idUsuario;
 
-  constructor(private route: ActivatedRoute, private apiService: APIService,private authService: AuthService, private router: Router) {
+  constructor(private route: ActivatedRoute, private apiService: APIService, private authService: AuthService, private router: Router) {
     this.idPelicula = this.route.snapshot.queryParams['id'];
     this.numeroBoletas = this.route.snapshot.queryParams['numero'];
+    this.tipo = this.route.snapshot.queryParams['tipo'];
     console.log(this.idPelicula);
     console.log(this.numeroBoletas);
   }
 
   ngOnInit() {
-    this.apiService.getSillas(this.idPelicula)
+    this.apiService.getSillas(this.idPelicula, this.tipo)
         .subscribe(response => {
               console.log(response);
               if (response.data.codigoRespuesta == 'ok') {
@@ -45,7 +48,7 @@ export class ComprarComponent implements OnInit {
   public marcarSillasOcupadas() {
       this.sillas.forEach( (silla) => {
           this.sillasOcupadas.forEach((sillaOcupada) => {
-              if(sillaOcupada.id == silla.id) {
+              if (sillaOcupada.id == silla.id) {
                   const indice = this.sillas.indexOf(silla);
                   silla.disponibilidad = 'ocupada';
                   this.sillas[indice] = silla;
@@ -61,16 +64,34 @@ export class ComprarComponent implements OnInit {
   }
   public comprar() {
       this.idUsuario = this.authService.getUsuarioSesion().id;
-      this.apiService.comprarBoleta(this.idUsuario, this.idPelicula, this.sillasSeleccionadas).subscribe(
+      const fecha = this.getFechaActual();
+      console.log(fecha);
+      console.log(this.tipo);
+      this.apiService.comprarBoleta(this.idUsuario, this.idPelicula, this.sillasSeleccionadas, this.tipo, fecha).subscribe(
               response => {
                   console.log(response);
                   if(response.data.codigoRespuesta == 'ok') {
                       swal('Compra exitosa!', response.data.mensaje, 'success');
                       setTimeout( () => {
                           this.router.navigateByUrl('/peliculas');
-                      }, 2000)
+                      }, 2000);
                   }
-              },
-              error => {console.log(error)});
+              }, error => {console.log(error);});
   }
+
+  public getFechaActual() {
+      const tod = new Date();
+      let dd = tod.getDate();
+      let mm = tod.getMonth()+1; //January is 0!
+
+      const yyyy = tod.getFullYear();
+      if(dd < 10){
+          dd = '0' + dd;
+      }
+      if(mm < 10){
+          mm = '0'+ mm;
+      }
+      const t = yyyy + '-' + mm + '-' + dd;
+      return t;
+    }
 }
