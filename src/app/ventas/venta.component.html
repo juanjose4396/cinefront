@@ -1,0 +1,26 @@
+<!-- Page Content -->
+<div class="container mb-5">
+
+  <!-- Page Heading -->
+  <h1 class="mb-3 mt-3">Detalles de ventas</h1>
+
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active" aria-current="page"><h2 class="text-dark">Total de dinero recaudado por el cine: {{totalCine}}</h2></li>
+    </ol>
+  </nav>
+
+  <div class="list-group mb-3" *ngFor="let detalle of detalleVentas">
+    <div class="list-group-item list-group-item-action flex-column align-items-start">
+      <div class="d-flex w-100 justify-content-between mb-3">
+        <h5 class="mb-1">Total de dinero recaudado en el dia: {{detalle.total}}</h5>
+        <small>{{detalle.fecha}}</small>
+      </div>
+      <p class="mb-0">Cantidad de voletas vendidas: {{detalle.cantidad2D}}</p>
+      <small>Total de dinero recaudado 2D: {{detalle.total2D}}</small>
+      <p class="mb-0 mt-3">Cantidad de voletas vendidas: {{detalle.cantidad3D}}</p>
+      <small>Total de dinero recaudado 2D: {{detalle.total3D}}</small>
+    </div>
+  </div>
+
+  </div>

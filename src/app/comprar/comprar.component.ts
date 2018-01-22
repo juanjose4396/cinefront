@@ -12,6 +12,7 @@ declare var swal: any;
 })
 export class ComprarComponent implements OnInit {
   idPelicula = 0;
+  pelicula:any = {};
   numeroBoletas = 0;
   tipo;
   sillas: any;
@@ -44,6 +45,13 @@ export class ComprarComponent implements OnInit {
             error => {
               console.log(error);
             });
+    this.apiService.getPelicula(this.idPelicula)
+        .subscribe(response => {
+            console.log(response);
+            this.pelicula = response.data.pelicula;
+        }, error => {
+            console.log(error);
+        });
   }
   public marcarSillasOcupadas() {
       this.sillas.forEach( (silla) => {
@@ -64,10 +72,8 @@ export class ComprarComponent implements OnInit {
   }
   public comprar() {
       this.idUsuario = this.authService.getUsuarioSesion().id;
-      const fecha = this.getFechaActual();
-      console.log(fecha);
       console.log(this.tipo);
-      this.apiService.comprarBoleta(this.idUsuario, this.idPelicula, this.sillasSeleccionadas, this.tipo, fecha).subscribe(
+      this.apiService.comprarBoleta(this.idUsuario, this.idPelicula, this.sillasSeleccionadas, this.tipo, this.pelicula.fecha).subscribe(
               response => {
                   console.log(response);
                   if(response.data.codigoRespuesta == 'ok') {
@@ -78,22 +84,4 @@ export class ComprarComponent implements OnInit {
                   }
               }, error => {console.log(error);});
   }
-
-  public getFechaActual() {
-      const tod = new Date();
-      let dd = tod.getDate();
-      let mm = tod.getMonth()+1; //January is 0!
-      let d;
-      let m;
-
-      const yyyy = tod.getFullYear();
-      if(dd < 10){
-          d = '0' + dd;
-      }
-      if(mm < 10){
-          m = '0' + mm;
-      }
-      const t = yyyy + '-' + m + '-' + d;
-      return t;
-    }
 }

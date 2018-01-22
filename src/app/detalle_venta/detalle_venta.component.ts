@@ -3,6 +3,9 @@ import {APIService} from '../services/api.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 declare var swal: any;
+import * as pdfMake from 'pdfmake/build/pdfmake';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import {AuthService} from '../services/auth.service';
 
 @Component({
   selector: 'app-detalleVenta',
@@ -15,8 +18,9 @@ export class DetalleVentaComponent implements OnInit {
   totalRecaudado;
   id = null;
 
-  constructor(private apiService: APIService,private route: ActivatedRoute,private router: Router) {
+  constructor(private apiService: APIService, private route: ActivatedRoute,private authService: AuthService) {
     this.id = this.route.snapshot.params['id'];
+    pdfMake.vfs = pdfFonts.pdfMake.vfs;
   }
   ngOnInit() {
       this.apiService.getPelicula(this.id).subscribe(
@@ -30,8 +34,30 @@ export class DetalleVentaComponent implements OnInit {
         },
         error => {
           console.log(error);
-
         }
     );
+  }
+
+  generarReporte() {
+      if(this.authService.getUsuarioSesion().rol_fk.nombre == 'supervisor') {
+          const dd = {
+              content: [
+                  { text: 'Reporte de ventas', style: 'header' },
+                  { text: 'nombre de la pelicula: ' + this.pelicula.nombre, fontSize: 15 },
+                  { text: 'cantidad de personas que la vieron: ' + this.cantidadPersonas, fontSize: 15 },
+                  { text: 'total de dinero recaudado: ' + this.totalRecaudado, fontSize: 15 }
+              ],
+              styles: {
+                  header: {
+                      fontSize: 22,
+                      bold: true
+                  }
+              }
+          };
+          pdfMake.createPdf(dd).download();
+          swal('Operacion exitosa!', 'Se genero el reporte correctamente', 'success');
+      }else{
+        swal('Error!', 'No tiene permisos para realizar esta accion', 'error');
+      }
   }
 }

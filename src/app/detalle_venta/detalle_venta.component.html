@@ -19,8 +19,9 @@
       </div>
     </div>
     <div class="col-lg-6 col-sm-6 portfolio-item mt-5">
-      <h1>Total de personas que vieron la pelicula: {{ cantidadPersonas}}</h1>
-      <h1>Total recaudado: $ {{totalRecaudado | number}}</h1>
+      <h1 class="mt-5">Total de personas que vieron la pelicula: {{ cantidadPersonas}}</h1>
+      <h1 class="mt-5">Total recaudado: $ {{totalRecaudado | number}}</h1>
+      <button class="btn btn-outline-danger btn-block mt-5" (click)="generarReporte()">Generar reporte</button>
     </div>
   </div>
   <!-- /.row -->

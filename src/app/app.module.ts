@@ -16,14 +16,19 @@ import {DetalleComponent} from './detalle/detalle.component';
 import { ComprarComponent } from './comprar/comprar.component';
 import {ResaltarClickDirective} from './directives/resaltar-click.directive';
 import {DetalleVentaComponent} from './detalle_venta/detalle_venta.component';
+import {VentasComponent} from './ventas/venta.component';
+import {AdministradorGuard} from './services/administradorGuard.service';
+import { PerfilComponent } from './perfil/perfil.component';
 
 const routes = [
     {path: '', component: LoginComponent, canActivate: [AuthGuardInverse]},
     {path: 'login', component: LoginComponent, canActivate: [AuthGuardInverse]},
     {path: 'peliculas', component: PeliculasComponent, canActivate: [AuthGuard]},
     {path: 'pelicula/:id', component: DetalleComponent, canActivate: [AuthGuard]},
-    {path: 'comprar/boletas/sillas', component: ComprarComponent},
-    {path: 'pelicula/detalle/venta/:id', component: DetalleVentaComponent}];
+    {path: 'comprar/boletas/sillas', component: ComprarComponent, canActivate: [AuthGuard]},
+    {path: 'pelicula/detalle/venta/:id', component: DetalleVentaComponent, canActivate: [AuthGuard]},
+    {path: 'detalle/ventas', component: VentasComponent, canActivate: [AuthGuard, AdministradorGuard]},
+    {path: 'perfil', component: PerfilComponent, canActivate: [AuthGuard]}];
 
 @NgModule({
   declarations: [
@@ -33,14 +38,16 @@ const routes = [
     DetalleComponent,
     ComprarComponent,
     ResaltarClickDirective,
-    DetalleVentaComponent],
+    DetalleVentaComponent,
+    VentasComponent,
+    PerfilComponent],
   imports: [
     BrowserModule,
     RouterModule.forRoot(routes),
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule],
-  providers: [AuthService, APIService, AuthGuard, AuthGuardInverse],
+  providers: [AuthService, APIService, AuthGuard, AuthGuardInverse, AdministradorGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
