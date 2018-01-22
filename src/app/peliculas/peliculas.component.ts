@@ -36,8 +36,8 @@ export class PeliculasComponent implements OnInit {
   }
 
   public comprar(id) {
-      if(this.authService.getUsuarioSesion().rol_fk.nomre == 'taquilla') {
-          this.router.navigateByUrl('/prlicula/' + id);
+      if(this.authService.getUsuarioSesion().rol_fk.nombre == 'taquilla') {
+          this.router.navigateByUrl('/pelicula/' + id);
       }else{
           swal('Lo semtimos!', 'Debes tener permiso de taquilla para entrar a esta seccion' , 'error');
       }
