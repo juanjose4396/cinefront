@@ -19,13 +19,14 @@ import {DetalleVentaComponent} from './detalle_venta/detalle_venta.component';
 import {VentasComponent} from './ventas/venta.component';
 import {AdministradorGuard} from './services/administradorGuard.service';
 import { PerfilComponent } from './perfil/perfil.component';
+import {TaquillaGuard} from './services/taquillaGuard.service';
 
 const routes = [
     {path: '', component: LoginComponent, canActivate: [AuthGuardInverse]},
     {path: 'login', component: LoginComponent, canActivate: [AuthGuardInverse]},
     {path: 'peliculas', component: PeliculasComponent, canActivate: [AuthGuard]},
-    {path: 'pelicula/:id', component: DetalleComponent, canActivate: [AuthGuard]},
-    {path: 'comprar/boletas/sillas', component: ComprarComponent, canActivate: [AuthGuard]},
+    {path: 'pelicula/:id', component: DetalleComponent, canActivate: [AuthGuard, TaquillaGuard]},
+    {path: 'comprar/boletas/sillas', component: ComprarComponent, canActivate: [AuthGuard, TaquillaGuard]},
     {path: 'pelicula/detalle/venta/:id', component: DetalleVentaComponent, canActivate: [AuthGuard]},
     {path: 'detalle/ventas', component: VentasComponent, canActivate: [AuthGuard, AdministradorGuard]},
     {path: 'perfil', component: PerfilComponent, canActivate: [AuthGuard]}];
@@ -47,7 +48,7 @@ const routes = [
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule],
-  providers: [AuthService, APIService, AuthGuard, AuthGuardInverse, AdministradorGuard],
+  providers: [AuthService, APIService, AuthGuard, AuthGuardInverse, AdministradorGuard, TaquillaGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

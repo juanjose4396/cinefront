@@ -23,7 +23,8 @@
             <a href="#">{{pelicula.nombre}}</a>
           </h4>
           <p class="card-text">{{pelicula.descripcion}}</p>
-          <a href="#" routerLink="/pelicula/{{pelicula.id}}" class="btn btn-outline-info">Ver</a>
+          <!--<a href="#" routerLink="/pelicula/{{pelicula.id}}" class="btn btn-outline-info">Comprar</a>-->
+          <button class="btn btn-outline-info" (click)="comprar(pelicula.id)">Comprar</button>
           <a href="#" routerLink="/pelicula/detalle/venta/{{pelicula.id}}" class="btn btn-outline-success">Detalles de venta</a>
         </div>
       </div>

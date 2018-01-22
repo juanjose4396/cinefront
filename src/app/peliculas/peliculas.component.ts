@@ -1,5 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {APIService} from '../services/api.service';
+import {AuthService} from '../services/auth.service';
+import {Router} from '@angular/router';
+declare var swal: any;
 
 @Component({
   selector: 'app-peliculas',
@@ -10,7 +13,7 @@ export class PeliculasComponent implements OnInit {
   peliculas = null;
   msjError = '';
 
-  constructor(private apiService: APIService) {
+  constructor(private apiService: APIService, private authService: AuthService, private router: Router) {
   }
 
   ngOnInit() {
@@ -30,5 +33,13 @@ export class PeliculasComponent implements OnInit {
             console.log(error);
         }
     );
+  }
+
+  public comprar(id) {
+      if(this.authService.getUsuarioSesion().rol_fk.nomre == 'taquilla') {
+          this.router.navigateByUrl('/prlicula/' + id);
+      }else{
+          swal('Lo semtimos!', 'Debes tener permiso de taquilla para entrar a esta seccion' , 'error');
+      }
   }
 }
