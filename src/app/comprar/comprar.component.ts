@@ -20,11 +20,13 @@ export class ComprarComponent implements OnInit {
   sillasSeleccionadas = [];
   contador = 0;
   idUsuario;
+  model:any = {};
 
   constructor(private route: ActivatedRoute, private apiService: APIService, private authService: AuthService, private router: Router) {
     this.idPelicula = this.route.snapshot.queryParams['id'];
     this.numeroBoletas = this.route.snapshot.queryParams['numero'];
     this.tipo = this.route.snapshot.queryParams['tipo'];
+    this.model.dinero = '';
     console.log(this.idPelicula);
     console.log(this.numeroBoletas);
   }
@@ -72,16 +74,26 @@ export class ComprarComponent implements OnInit {
   }
   public comprar() {
       this.idUsuario = this.authService.getUsuarioSesion().id;
-      console.log(this.tipo);
-      this.apiService.comprarBoleta(this.idUsuario, this.idPelicula, this.sillasSeleccionadas, this.tipo, this.pelicula.fecha).subscribe(
-              response => {
-                  console.log(response);
-                  if(response.data.codigoRespuesta == 'ok') {
-                      swal('Compra exitosa!', response.data.mensaje, 'success');
-                      setTimeout( () => {
-                          this.router.navigateByUrl('/peliculas');
-                      }, 2000);
-                  }
-              }, error => {console.log(error);});
+      const valorCompra= (this.numeroBoletas * this.pelicula.precio);
+
+      if(this.model.dinero == '') {
+          swal('Error', 'Debe ingresar un valor', 'error');
+      }else{
+          if(this.model.dinero >=  valorCompra) {
+              this.apiService.comprarBoleta(this.idUsuario, this.idPelicula, this.sillasSeleccionadas, this.tipo, this.pelicula.fecha).subscribe(
+                  response => {
+                      console.log(response);
+                      if(response.data.codigoRespuesta == 'ok') {
+                          const devuelta = (this.model.dinero - valorCompra);
+                          swal('Informacion taquilla', response.data.mensaje + ', la devuelta es: ' + devuelta, 'success');
+                          setTimeout( () => {
+                              this.router.navigateByUrl('/peliculas');
+                          }, 2000);
+                      }
+                  }, error => {console.log(error);});
+          }else{
+              swal('Informacion taquilla', 'El monto debe superar el valor de la compra: ' + valorCompra, 'error');
+          }
+      }
   }
 }

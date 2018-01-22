@@ -10,6 +10,9 @@
       </div>
     </ng-container>
     <div class="container text-center mt-4">
+      <h2 [hidden]="contador<numeroBoletas" class="font-weight-bold">Ingrese la cantidad de dinero recibida</h2>
+      <input [hidden]="contador<numeroBoletas" type="number" [(ngModel)]="model.dinero"/>
+      <hr>
       <button [hidden]="contador<numeroBoletas" (click)="comprar()" class="btn btn-lg btn-success">Comprar boletas</button>
     </div>
   </div>
