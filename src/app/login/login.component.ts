@@ -1,21 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnChanges, OnInit, Renderer2, ViewChild, ViewChildren} from '@angular/core';
 import {Router} from '@angular/router';
 import {AuthService} from '../services/auth.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+declare var swal: any;
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
-  msjError= '';
-  msjSuccess= '';
+export class LoginComponent implements OnInit{
   registerForm: FormGroup;
   minLengthEmail = 4;
   model: any = {};
 
-  constructor(private router: Router, private authService: AuthService) {
+  constructor(private router: Router, private authService: AuthService,private renderer: Renderer2) {
       this.model.email = '';
       this.model.pass = '';
   }
@@ -32,27 +31,22 @@ export class LoginComponent implements OnInit {
           ])
       });
   }
-
   public login() {
       this.authService.login(this.model.email, this.model.pass).subscribe(
           response => {
               console.log(response);
 
               if(response.data.codigoRespuesta.toString() === 'ok') {
-                  this.msjSuccess = response.data.mensaje;
+                  swal('Login exitoso!', response.data.mensaje, 'success');
                   localStorage.setItem('usuarioSesion', JSON.stringify(response.data.usuario));
                   setTimeout(() => {
                       this.router.navigateByUrl('/peliculas');
-                  }, 3000);
+                  }, 2000);
               }else{
-                  this.msjError = response.data.mensaje;
-                  setTimeout(() => {
-                      this.msjError = '';
-                  }, 3000);
+                  swal('Ocurrio un error!', response.data.mensaje, 'error');
               }
           }, error => {
               console.log(error);
-              this.msjError = error.data.mensaje;
           }
       );
   }
